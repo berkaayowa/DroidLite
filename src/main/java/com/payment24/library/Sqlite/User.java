@@ -1,10 +1,8 @@
 package com.payment24.library.Sqlite;
 
-import Payment24.Sqlite.Attributes.Column;
-import Payment24.Sqlite.Enum.Constraint;
-import Payment24.Sqlite.Attributes.Table;
-import Payment24.Sqlite.Entity;
-
+import com.payment24.library.Sqlite.Attributes.Column;
+import com.payment24.library.Sqlite.Enum.Constraint;
+import com.payment24.library.Sqlite.Attributes.Table;
 import java.util.Date;
 
 @Table(Name = "User")
