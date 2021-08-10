@@ -10,6 +10,8 @@ import com.payment24.library.Sqlite.TableQuery;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Helper {
 
@@ -56,8 +58,9 @@ public class Helper {
         return table;
     }
 
-    public static ArrayList<TableQuery> GenerateQuery(Table table) {
+    public static HashMap<Query,TableQuery> GenerateQuery(Table table) {
 
+        HashMap<Query,TableQuery> queryTableQueryMap = new HashMap<>();
         ArrayList<TableQuery> queries = new ArrayList<>();
 
         String selectQry = "SELECT {{columnQry}} FROM " + table.Name;
@@ -88,11 +91,11 @@ public class Helper {
         selectQry = selectQry.replace("{{columnQry}}", columnQry);
         createQry = createQry.replace("{{columns}}", createColumnQry);
 
-        queries.add(new TableQuery(Query.Update, insertQry));
-        queries.add(new TableQuery(Query.Select, selectQry));
-        queries.add(new TableQuery(Query.CreateTable, createQry));
+        queryTableQueryMap.put(Query.CreateTable, new TableQuery(Query.CreateTable, createQry));
+        queryTableQueryMap.put(Query.Update, new TableQuery(Query.Update, insertQry));
+        queryTableQueryMap.put(Query.Select, new TableQuery(Query.Select, selectQry));
 
-        return queries;
+        return queryTableQueryMap;
     }
 
     private static String GetSqliteColumnType(TableColumn tableColumn)
