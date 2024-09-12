@@ -3,6 +3,7 @@ package com.droidlite.libtest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.droidlite.sqlite.common.Database;
 
@@ -15,19 +16,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Database.SetUp(this, "tets.db", 1);
+        Database.Setup(this, "tets.db", 1);
 
         User user = new User();
-        user.Id = 2;
+        user.Id = 3;
         user.Dob = new Date();
         user.Salary = 25655;
         user.HourWorked = 852.595;
 
-        if(user.Save()) {
-            System.out.println("Saved");
+        if(user.save()) {
+            Log.e("DebugN","Saved");
         }
         else {
-            System.out.println("Could not be save");
+            Log.e("DebugN","Could not be save");
         }
     }
 }

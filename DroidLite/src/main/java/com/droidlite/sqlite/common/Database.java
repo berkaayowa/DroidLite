@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.droidlite.sqlite.enums.Query;
-import com.droidlite.sqlite.Table;
 import com.droidlite.sqlite.TableQuery;
 
 public class Database extends SQLiteOpenHelper {
@@ -18,12 +17,12 @@ public class Database extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
-    public static Database GetInstance() {
+    public static Database getInstance() {
 
         return CurrentDbObject;
     }
 
-    public static Database SetUp(@Nullable Context context, @Nullable String name, int version) {
+    public static Database Setup(@Nullable Context context, @Nullable String name, int version) {
 
         if(CurrentDbObject == null)
             CurrentDbObject = new Database(context, name, null, version);
@@ -44,7 +43,7 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean Run(TableQuery query) {
+    public TableQuery run(TableQuery query) {
 
         try {
 
@@ -56,6 +55,6 @@ public class Database extends SQLiteOpenHelper {
             query.Success = false;
         }
 
-        return true;
+        return query;
     }
 }

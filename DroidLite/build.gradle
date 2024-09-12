@@ -33,3 +33,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+//tasks.register('deleteJar', Delete) {
+//    delete 'libs/droidlite.jar'
+//}
+//
+//tasks.register('createJar', Copy) {
+//    from('build/intermediates/bundles/release/')
+//    into('libs/')
+//    include('classes.jar')
+//    rename('classes.jar', 'droidlite.jar')
+//}
+//createJar.dependsOn(deleteJar, build)

@@ -11,11 +11,10 @@ import com.droidlite.sqlite.enums.Query;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Helper {
 
-    public static Table GetEntityTable(Entity entity) {
+    public static Table getEntityTable(Entity entity) {
 
         Table table = new Table();
 
@@ -28,11 +27,11 @@ public class Helper {
 
             for (int i = 0; i < fields.length; i++) {
 
-                if(!fields[i].isAnnotationPresent(Column.class))
-                    continue;
-
                 try
                 {
+                    if(!fields[i].isAnnotationPresent(Column.class))
+                        continue;
+
                     TableColumn tableColumn = new TableColumn();
                     Column col = fields[i].getAnnotation(Column.class);
 
@@ -53,7 +52,7 @@ public class Helper {
             }
         }
 
-        table.Queries = Helper.GenerateQuery(table);
+        table.queries = Helper.GenerateQuery(table);
 
         return table;
     }
@@ -75,8 +74,8 @@ public class Helper {
             createColumnQry = createColumnQry + table.Columns.get(i).Name;
 
             columnQry = columnQry + table.Columns.get(i).Name;
-            columnValue = columnValue + table.Columns.get(i).Value;
-            createColumnQry = createColumnQry + " " + GetSqliteColumnType(table.Columns.get(i));
+            columnValue = columnValue + getSqliteColumnValue(table.Columns.get(i));
+            createColumnQry = createColumnQry + " " + getSqliteColumnType(table.Columns.get(i));
 
             if(i != table.Columns.size() - 1) {
                 createColumnQry = createColumnQry + ", ";
@@ -98,7 +97,7 @@ public class Helper {
         return queryTableQueryMap;
     }
 
-    private static String GetSqliteColumnType(TableColumn tableColumn)
+    private static String getSqliteColumnType(TableColumn tableColumn)
     {
         String type = "";
 
@@ -112,8 +111,6 @@ public class Helper {
                 type = "INTEGER";
                 break;
             case "float":
-                type = "REAL";
-                break;
             case "double":
                 type = "REAL";
                 break;
@@ -122,7 +119,7 @@ public class Helper {
                 type = "NUMERIC";
                 break;
             default:
-                type = tableColumn.Type.toLowerCase();
+                type = "TEXT";
                 break;
 
         }
@@ -140,5 +137,27 @@ public class Helper {
         }
 
         return  type;
+    }
+
+    private static String getSqliteColumnValue(TableColumn tableColumn)
+    {
+        String value = "";
+
+        if(tableColumn.Value != null)
+            value = tableColumn.Value.toString();
+
+        switch (tableColumn.Type.toLowerCase()) {
+            case "java.lang.string":
+            case "string":
+            case "java.util.date":
+            case "date":
+                value = "'" + value + "'";
+                break;
+            default:
+                break;
+
+        }
+
+        return  value;
     }
 }

@@ -12,6 +12,6 @@ public class Table {
     }
     public String Name;
     public ArrayList<TableColumn> Columns;
-    public HashMap<Query,TableQuery> Queries;
+    public HashMap<Query,TableQuery> queries;
    // public map<String, String
 }

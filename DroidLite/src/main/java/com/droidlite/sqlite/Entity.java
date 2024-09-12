@@ -4,37 +4,33 @@ import com.droidlite.sqlite.common.Database;
 import com.droidlite.sqlite.common.Helper;
 import com.droidlite.sqlite.enums.Query;
 import com.droidlite.sqlite.interfaces.IEntity;
-import java.util.Objects;
 
 public class Entity implements IEntity {
 
     @Override
-    public Boolean Save() {
+    public Boolean save() {
 
-        Table table =  Helper.GetEntityTable(this);
-        table = OnQueryGenerated(table);
+        Table table =  Helper.getEntityTable(this);
+        table = onGetEntityTable(table);
 
-        TableQuery CreateQuery =  table.Queries.get(Query.CreateTable);
-        TableQuery UpdateQuery =  table.Queries.get(Query.Update);
+        TableQuery createQuery =  onQueryGenerated(Query.CreateTable, table.queries.get(Query.CreateTable));
+        TableQuery updateQuery =  onQueryGenerated(Query.Update, table.queries.get(Query.Update));
 
-        Database.GetInstance().Run(CreateQuery);
+        createQuery = Database.getInstance().run(createQuery);
+        updateQuery = Database.getInstance().run(updateQuery);
 
-        for (int i = 0; i < table.Queries.size(); i++) {
-
-
-
-        }
-
-
-        return false;
+        return updateQuery.Success;
     }
 
     @Override
-    public Table  OnQueryGenerated(Table table) {
-        return table;
+    public TableQuery onQueryGenerated(Query queryType, TableQuery query) {
+        return query;
     }
 
-
+    @Override
+    public Table onGetEntityTable(Table table) {
+        return table;
+    }
 
 
 }
