@@ -1,4 +1,4 @@
-package com.payment24.library.Sqlite.Enum;
+package com.droidlite.sqlite.enums;
 
 public enum Query {
     CreateTable,

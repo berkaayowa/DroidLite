@@ -1,6 +1,6 @@
-package com.payment24.library.Sqlite.Interface;
+package com.droidlite.sqlite.interfaces;
 
-import com.payment24.library.Sqlite.Table;
+import com.droidlite.sqlite.Table;
 
 public interface IEntity {
     

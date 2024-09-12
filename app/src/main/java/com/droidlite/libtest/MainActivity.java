@@ -1,10 +1,10 @@
-package com.payment24.libtest;
+package com.droidlite.libtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.payment24.library.Sqlite.Common.Database;
+import com.droidlite.sqlite.common.Database;
 
 import java.util.Date;
 

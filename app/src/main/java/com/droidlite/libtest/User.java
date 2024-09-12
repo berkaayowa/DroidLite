@@ -1,9 +1,10 @@
-package com.payment24.libtest;
+package com.droidlite.libtest;
 
-import com.payment24.library.Sqlite.Attributes.Column;
-import com.payment24.library.Sqlite.Entity;
-import com.payment24.library.Sqlite.Enum.Constraint;
-import com.payment24.library.Sqlite.Attributes.Table;
+import com.droidlite.sqlite.enums.Constraint;
+import com.droidlite.sqlite.Entity;
+import com.droidlite.sqlite.attributes.Column;
+import com.droidlite.sqlite.attributes.Table;
+
 import java.util.Date;
 
 @Table(Name = "User")

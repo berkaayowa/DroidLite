@@ -1,4 +1,4 @@
-package com.payment24.library.Sqlite.Attributes;
+package com.droidlite.sqlite.attributes;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

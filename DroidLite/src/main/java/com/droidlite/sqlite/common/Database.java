@@ -1,4 +1,4 @@
-package com.payment24.library.Sqlite.Common;
+package com.droidlite.sqlite.common;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.payment24.library.Sqlite.Enum.Query;
-import com.payment24.library.Sqlite.Table;
-import com.payment24.library.Sqlite.TableQuery;
+import com.droidlite.sqlite.enums.Query;
+import com.droidlite.sqlite.Table;
+import com.droidlite.sqlite.TableQuery;
 
 public class Database extends SQLiteOpenHelper {
 

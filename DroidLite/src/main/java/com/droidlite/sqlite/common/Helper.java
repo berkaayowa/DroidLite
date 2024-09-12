@@ -1,12 +1,12 @@
-package com.payment24.library.Sqlite.Common;
+package com.droidlite.sqlite.common;
 
-import com.payment24.library.Sqlite.Attributes.Column;
-import com.payment24.library.Sqlite.Entity;
-import com.payment24.library.Sqlite.Enum.Constraint;
-import com.payment24.library.Sqlite.Enum.Query;
-import com.payment24.library.Sqlite.Table;
-import com.payment24.library.Sqlite.TableColumn;
-import com.payment24.library.Sqlite.TableQuery;
+import com.droidlite.sqlite.Entity;
+import com.droidlite.sqlite.Table;
+import com.droidlite.sqlite.TableColumn;
+import com.droidlite.sqlite.TableQuery;
+import com.droidlite.sqlite.attributes.Column;
+import com.droidlite.sqlite.enums.Constraint;
+import com.droidlite.sqlite.enums.Query;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ public class Helper {
 
         Table table = new Table();
 
-        if (entity.getClass().isAnnotationPresent(com.payment24.library.Sqlite.Attributes.Table.class)) {
+        if (entity.getClass().isAnnotationPresent(com.droidlite.sqlite.attributes.Table.class)) {
 
-            com.payment24.library.Sqlite.Attributes.Table attrTable = entity.getClass().getAnnotation(com.payment24.library.Sqlite.Attributes.Table.class);
+            com.droidlite.sqlite.attributes.Table attrTable = entity.getClass().getAnnotation(com.droidlite.sqlite.attributes.Table.class);
             table.Name = attrTable.Name();
 
             Field[] fields = entity.getClass().getFields();

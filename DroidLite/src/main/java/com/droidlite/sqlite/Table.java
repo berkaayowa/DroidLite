@@ -1,6 +1,6 @@
-package com.payment24.library.Sqlite;
+package com.droidlite.sqlite;
 
-import com.payment24.library.Sqlite.Enum.Query;
+import com.droidlite.sqlite.enums.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,7 @@
-package com.payment24.library.Sqlite.Attributes;
+package com.droidlite.sqlite.attributes;
 
-import com.payment24.library.Sqlite.Enum.Constraint;
+
+import com.droidlite.sqlite.enums.*;
 
 
 import java.lang.annotation.ElementType;

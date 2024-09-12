@@ -1,6 +1,6 @@
-package com.payment24.library.Sqlite;
+package com.droidlite.sqlite;
 
-import com.payment24.library.Sqlite.Enum.Query;
+import com.droidlite.sqlite.enums.Query;
 
 public class TableQuery {
 
@@ -9,7 +9,7 @@ public class TableQuery {
         Statement = statement;
     }
 
-    public com.payment24.library.Sqlite.Enum.Query Query;
+    public com.droidlite.sqlite.enums.Query Query;
     public String Statement;
     public boolean Success;
 }

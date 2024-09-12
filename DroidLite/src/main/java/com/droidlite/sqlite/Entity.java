@@ -1,9 +1,9 @@
-package com.payment24.library.Sqlite;
+package com.droidlite.sqlite;
 
-import com.payment24.library.Sqlite.Common.Database;
-import com.payment24.library.Sqlite.Common.Helper;
-import com.payment24.library.Sqlite.Enum.Query;
-import com.payment24.library.Sqlite.Interface.IEntity;
+import com.droidlite.sqlite.common.Database;
+import com.droidlite.sqlite.common.Helper;
+import com.droidlite.sqlite.enums.Query;
+import com.droidlite.sqlite.interfaces.IEntity;
 import java.util.Objects;
 
 public class Entity implements IEntity {
