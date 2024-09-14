@@ -1,8 +1,7 @@
 package com.droidlite.sqlite.attributes;
 
 
-import com.droidlite.sqlite.enums.*;
-
+import com.droidlite.sqlite.enums.Constraint;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,9 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target(ElementType.CONSTRUCTOR)
 
-public @interface Column {
-    public String Name() default "";
-    public Constraint[] Constraint() default {};
+public @interface QueryParameter {
+    public String[] Param() default {};
 }

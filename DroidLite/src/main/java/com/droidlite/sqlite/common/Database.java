@@ -1,13 +1,18 @@
 package com.droidlite.sqlite.common;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import androidx.annotation.Nullable;
 
 import com.droidlite.sqlite.enums.Query;
 import com.droidlite.sqlite.TableQuery;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -22,7 +27,7 @@ public class Database extends SQLiteOpenHelper {
         return CurrentDbObject;
     }
 
-    public static Database Setup(@Nullable Context context, @Nullable String name, int version) {
+    public static Database setup(@Nullable Context context, @Nullable String name, int version) {
 
         if(CurrentDbObject == null)
             CurrentDbObject = new Database(context, name, null, version);
@@ -56,5 +61,31 @@ public class Database extends SQLiteOpenHelper {
         }
 
         return query;
+    }
+
+    public ArrayList<HashMap<String, String>> runSelectQuery(String sql, String[] bindingParameter){
+
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
+        //String sql = "SELECT * from Visiteur WHERE vis_login = ? and vis_mdp = ?";
+        SQLiteStatement statement =  this.getWritableDatabase().compileStatement(sql);
+
+        Cursor cursor = this.getWritableDatabase().rawQuery(sql, bindingParameter);
+
+        while(cursor.moveToNext()){
+
+            int columnCount = cursor.getColumnCount();
+            HashMap<String, String> row = new HashMap<>();
+
+            for (int i = 0; i < columnCount; i++)
+                row.put(cursor.getColumnName(i), cursor.getString(i));
+
+            result.add(row);
+
+        }
+
+        cursor.close();
+
+        return result;
+
     }
 }

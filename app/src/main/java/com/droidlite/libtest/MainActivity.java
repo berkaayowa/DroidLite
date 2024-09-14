@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.droidlite.sqlite.Entity;
 import com.droidlite.sqlite.common.Database;
 
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,10 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Database.Setup(this, "tets.db", 1);
+        Database.setup(this, "tets.db", 1);
 
         User user = new User();
-        user.Id = 3;
+        user.Id = 0;
+        user.Name = "berka";
         user.Dob = new Date();
         user.Salary = 25655;
         user.HourWorked = 852.595;
@@ -30,5 +33,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.e("DebugN","Could not be save");
         }
+
+        new User("berka");
     }
 }

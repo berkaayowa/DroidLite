@@ -8,10 +8,10 @@ import java.util.HashMap;
 public class Table {
 
     public Table() {
-        this.Columns = new ArrayList<>();
+        this.tableColumns = new ArrayList<>();
     }
     public String Name;
-    public ArrayList<TableColumn> Columns;
+    public ArrayList<TableColumn> tableColumns;
     public HashMap<Query,TableQuery> queries;
    // public map<String, String
 }

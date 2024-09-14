@@ -3,5 +3,6 @@ package com.droidlite.sqlite.enums;
 public enum Query {
     CreateTable,
     Select,
-    Update
+    Update,
+    Insert
 }
