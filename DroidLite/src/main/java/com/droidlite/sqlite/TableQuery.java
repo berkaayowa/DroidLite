@@ -4,6 +4,7 @@ import com.droidlite.sqlite.enums.Query;
 
 public class TableQuery {
 
+
     public TableQuery(Query query, String statement) {
         Query = query;
         Statement = statement;
@@ -12,4 +13,6 @@ public class TableQuery {
     public com.droidlite.sqlite.enums.Query Query;
     public String Statement;
     public boolean Success;
+
+
 }

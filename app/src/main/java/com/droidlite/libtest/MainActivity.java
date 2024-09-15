@@ -20,20 +20,20 @@ public class MainActivity extends AppCompatActivity {
 
         Database.setup(this, "tets.db", 1);
 
-        User user = new User();
-        user.Id = 0;
-        user.Name = "berka";
-        user.Dob = new Date();
-        user.Salary = 25655;
-        user.HourWorked = 852.595;
+//        User user = new User();
+//        user.Id = 0;
+//        user.Name = "ayowa";
+//        user.Dob = new Date();
+//        user.Salary = 56;
+//        user.HourWorked = 30.5;
+//
+//        if(user.save()) {
+//            Log.e("DebugN","Saved");
+//        }
+//        else {
+//            Log.e("DebugN","Could not be save");
+//        }
 
-        if(user.save()) {
-            Log.e("DebugN","Saved");
-        }
-        else {
-            Log.e("DebugN","Could not be save");
-        }
-
-        new User("berka");
+        new User("ayowa");
     }
 }

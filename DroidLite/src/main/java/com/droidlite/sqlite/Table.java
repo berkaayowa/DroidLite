@@ -1,17 +1,31 @@
 package com.droidlite.sqlite;
 
-import com.droidlite.sqlite.enums.Query;
+import com.droidlite.sqlite.enums.Constraint;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 
 public class Table {
 
     public Table() {
-        this.tableColumns = new ArrayList<>();
+        this.Columns = new ArrayList<>();
     }
     public String Name;
-    public ArrayList<TableColumn> tableColumns;
-    public HashMap<Query,TableQuery> queries;
-   // public map<String, String
+    public ArrayList<TableColumn> Columns;
+
+    public TableColumn getPrimaryKey() {
+
+        for (TableColumn column: Columns) {
+
+            for(Constraint constraint: column.Constraints){
+
+                if(constraint == Constraint.PrimaryKey)
+                    return column;
+            }
+
+        }
+
+        return null;
+    }
+
 }

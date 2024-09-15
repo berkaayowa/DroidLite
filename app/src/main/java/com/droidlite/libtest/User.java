@@ -15,6 +15,7 @@ import java.util.List;
 public class User extends Entity {
 
     public User() {
+
     }
 
     public User(int id) {
@@ -26,7 +27,7 @@ public class User extends Entity {
     }
 
     @Column(Name = "Id", Constraint = {Constraint.PrimaryKey})
-    public int Id;
+    public Integer Id;
 
     @Column(Constraint = {Constraint.Null})
     public String Name;
