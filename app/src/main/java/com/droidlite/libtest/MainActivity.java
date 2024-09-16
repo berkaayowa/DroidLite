@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.droidlite.sqlite.Entity;
-import com.droidlite.sqlite.TableColumn;
-import com.droidlite.sqlite.common.Database;
+import com.droidlite.sqlite.DroidLiteSetup;
+import com.droidlite.sqlite.common.Helper;
+import com.droidlite.sqlite.interfaces.IEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,24 +19,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Database.setup(this, "tets.db", 1);
+        DroidLiteSetup.dataBase(this, "tets.db", 1);
+        DroidLiteSetup.tables(new Class[]{
+                User.class
+        });
 
-//        User user = new User();
-//        user.Id = 0;
-//        user.Name = "ayowa";
-//        user.Dob = new Date();
-//        user.Salary = 56;
-//        user.HourWorked = 30.5;
-//
-//        if(user.save()) {
-//            Log.e("DebugN","Saved");
-//        }
-//        else {
-//            Log.e("DebugN","Could not be save");
-//        }
+        User user = new User();
+        user.Id = 0;
+        user.Name = "ayowa";
+        user.Dob = new Date();
+        user.Salary = 56;
+        user.HourWorked = 30.5;
 
-        User.getAll();
+        if(user.save()) {
+            Helper.log("Saved");
+        }
+        else {
+            Helper.log("Could not be save");
+        }
 
-        new User(1);
+        ArrayList<IEntity> list = User.getAll();
+
+        if(list.size() > 0) {
+            User testuser = (User) list.get(0);
+            Helper.log("Data size:" + String.valueOf(list.size()));
+            Helper.log("Has data:" + String.valueOf(testuser.Id));
+        }
+        else {
+            Helper.log("Could not be save");
+        }
+        //new User(1);
     }
 }

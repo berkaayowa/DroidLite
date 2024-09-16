@@ -27,9 +27,7 @@ public class Entity implements IEntity {
             query = Helper.generateUpdateQuery(table);
         }
 
-        query = Database.getInstance().run(query);
-
-        return query.Success;
+        return Database.getInstance().run(query.Statement);
     }
 
     @Override

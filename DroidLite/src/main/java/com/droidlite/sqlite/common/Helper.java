@@ -1,6 +1,7 @@
 package com.droidlite.sqlite.common;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.droidlite.sqlite.Entity;
 import com.droidlite.sqlite.Table;
@@ -168,16 +169,17 @@ public class Helper {
 
         for(int i = 0; i < table.Columns.size(); i++) {
 
-            if(primaryKey.Name != table.Columns.get(i).Name) {
+            columns = columns + table.Columns.get(i).Name;
 
-                columns = columns + table.Columns.get(i).Name;
+            if(primaryKey.Name == table.Columns.get(i).Name) {
+                columnsValue = columnsValue + " NULL ";
+            }
+            else
                 columnsValue = columnsValue + getSqliteColumnValue(table.Columns.get(i).Value);
 
-                if(i != table.Columns.size() - 1) {
-                    columns = columns + ", ";
-                    columnsValue = columnsValue + ", ";
-                }
-
+            if(i != table.Columns.size() - 1) {
+                columns = columns + ", ";
+                columnsValue = columnsValue + ", ";
             }
 
         }
@@ -199,6 +201,8 @@ public class Helper {
                 break;
             case "int":
             case "integer":
+            case "java.lang.int":
+            case "java.lang.integer":
                 type = "INTEGER";
                 break;
             case "float":
@@ -310,6 +314,8 @@ public class Helper {
                                     fields[i].set(entity, Double.valueOf(value));
                                 case "int":
                                 case "integer":
+                                case "java.lang.int":
+                                case "java.lang.integer":
                                     fields[i].set(entity, Integer.valueOf(value));
                                 case "float":
                                     fields[i].set(entity, Float.valueOf(value));
@@ -374,5 +380,9 @@ public class Helper {
        }
 
         return where;
+    }
+
+    public static void log(String message) {
+        Log.e("DroidLite~Log",message);
     }
 }

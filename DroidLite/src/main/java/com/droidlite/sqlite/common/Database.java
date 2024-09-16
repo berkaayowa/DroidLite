@@ -48,19 +48,17 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-    public TableQuery run(TableQuery query) {
+    public boolean run(String query) {
 
         try {
-
-            this.getWritableDatabase().execSQL(query.Statement);
-            query.Success = true;
+            this.getWritableDatabase().execSQL(query);
+            return true;
         }
         catch (Exception ex)
         {
-            query.Success = false;
         }
 
-        return query;
+        return false;
     }
 
     public ArrayList<HashMap<String, String>> runSelectQuery(String sql, String[] bindingParameter){

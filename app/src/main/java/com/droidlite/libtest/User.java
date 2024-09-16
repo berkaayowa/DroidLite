@@ -14,6 +14,10 @@ import java.util.List;
 @Table(Name = "User")
 public class User extends Entity {
 
+    public User() {
+
+    }
+
     public User(int id) {
         populate(getById(id));
     }
