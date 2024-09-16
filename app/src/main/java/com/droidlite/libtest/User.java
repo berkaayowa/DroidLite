@@ -14,16 +14,8 @@ import java.util.List;
 @Table(Name = "User")
 public class User extends Entity {
 
-    public User() {
-
-    }
-
     public User(int id) {
-       getById(id);
-    }
-
-    public User(String name) {
-        getByName(name);
+        populate(getById(id));
     }
 
     @Column(Name = "Id", Constraint = {Constraint.PrimaryKey})
@@ -41,13 +33,18 @@ public class User extends Entity {
     @Column
     public double HourWorked;
 
-    public ArrayList<IEntity> getById(int id) {
-        return get(new TableColumn[]{new TableColumn("Id", id)});
+    public IEntity getById(int id) {
+        return getFirstOrNull(new TableColumn[]{new TableColumn("Id", id)});
     }
 
     public ArrayList<IEntity> getByName(String name) {
-        //new TableColumn("Name", name)
-        return get(new TableColumn[]{});
+        return get(new TableColumn[]{new TableColumn("Name", name)});
     }
+
+    public static ArrayList<IEntity> getAll() {
+        return Entity.getAll(User.class, new TableColumn[]{});
+    }
+
+
 
 }

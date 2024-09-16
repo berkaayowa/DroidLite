@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.droidlite.sqlite.Entity;
+import com.droidlite.sqlite.TableColumn;
 import com.droidlite.sqlite.common.Database;
 
 import java.util.Date;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 //            Log.e("DebugN","Could not be save");
 //        }
 
-        new User("ayowa");
+        User.getAll();
+
+        new User(1);
     }
 }

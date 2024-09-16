@@ -12,8 +12,5 @@ public interface IEntity {
     
     public Boolean save();
     public ArrayList<IEntity> get(Class<?> target, TableColumn [] columns);
-    public TableQuery onQueryGenerated(Query queryType, TableQuery tableQuery);
-    public Table onGetEntityTable(Table table);
-
 
 }

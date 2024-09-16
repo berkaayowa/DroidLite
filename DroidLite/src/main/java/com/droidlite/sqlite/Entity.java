@@ -13,7 +13,6 @@ public class Entity implements IEntity {
     public Boolean save() {
 
         Table table = Helper.convertEntityClassToTable(this.getClass(), this);
-        table = onGetEntityTable(table);
 
         TableColumn primaryKeyColumn = table.getPrimaryKey();
 
@@ -56,14 +55,40 @@ public class Entity implements IEntity {
         return get(this.getClass(), columns);
     }
 
-    @Override
-    public TableQuery onQueryGenerated(Query queryType, TableQuery query) {
-        return query;
+    public static ArrayList<IEntity> getAll(Class<?> target, TableColumn[] columns) {
+
+        ArrayList<IEntity> records = new ArrayList<>();
+
+        Table table = Helper.convertEntityClassToTable(target, null);
+
+        if(table != null) {
+
+            TableQuery query =  Helper.generateSelectQuery(table, columns);
+
+            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement, Helper.tableColumnToBindingParameter(columns)));
+        }
+
+        return records;
+
     }
 
-    @Override
-    public Table onGetEntityTable(Table table) {
-        return table;
+    public static IEntity getFirstOrNull(Class<?> target, TableColumn[] columns) {
+
+        ArrayList<IEntity> records = getAll(target, columns);
+
+        if(!records.isEmpty())
+            return records.get(0);
+
+        return null;
+    }
+
+    public IEntity getFirstOrNull(TableColumn[] columns) {
+
+        return getFirstOrNull(this.getClass(), columns);
+    }
+
+    protected void populate(IEntity entity) {
+        //ToDo
     }
 
 
