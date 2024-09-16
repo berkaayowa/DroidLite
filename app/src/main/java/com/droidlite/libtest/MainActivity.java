@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
         User user = new User();
         user.Id = 0;
-        user.Name = "ayowa";
+        user.Name = "ferre";
         user.Dob = new Date();
-        user.Salary = 56;
-        user.HourWorked = 30.5;
+        user.Salary = 4;
+        user.HourWorked = 6;
 
         if(user.save()) {
             Helper.log("Saved");
@@ -42,8 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         if(list.size() > 0) {
             User testuser = (User) list.get(0);
+
             Helper.log("Data size:" + String.valueOf(list.size()));
             Helper.log("Has data:" + String.valueOf(testuser.Id));
+
+            testuser.Name = "omba";
+            testuser.Dob = new Date();
+
+            if(testuser.save())
+                Helper.log("Updated");
         }
         else {
             Helper.log("Could not be save");

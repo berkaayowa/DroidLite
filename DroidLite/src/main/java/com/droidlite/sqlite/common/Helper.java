@@ -1,5 +1,7 @@
 package com.droidlite.sqlite.common;
 
+import static com.droidlite.sqlite.enums.ColumnType.*;
+
 import android.os.Build;
 import android.util.Log;
 
@@ -8,6 +10,7 @@ import com.droidlite.sqlite.Table;
 import com.droidlite.sqlite.TableColumn;
 import com.droidlite.sqlite.TableQuery;
 import com.droidlite.sqlite.attributes.Column;
+import com.droidlite.sqlite.enums.ColumnType;
 import com.droidlite.sqlite.enums.Constraint;
 import com.droidlite.sqlite.enums.Query;
 import com.droidlite.sqlite.interfaces.IEntity;
@@ -15,7 +18,6 @@ import com.droidlite.sqlite.interfaces.IEntity;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Helper {
@@ -56,7 +58,7 @@ public class Helper {
                     table.Columns.add(tableColumn);
 
                 }catch (Exception ex) {
-                    System.out.println("error: " + ex.getMessage());
+                    Helper.log("convertEntityClassToTable|error|0|" + ex.getMessage());
                 }
 
             }
@@ -191,34 +193,21 @@ public class Helper {
     }
 
     private static String getSqliteColumnType(TableColumn tableColumn)
-     {
+    {
         String type = "";
 
-        switch (tableColumn.Type.toLowerCase()) {
-            case "java.lang.string":
-            case "string":
-                type = "TEXT";
-                break;
-            case "int":
-            case "integer":
-            case "java.lang.int":
-            case "java.lang.integer":
-                type = "INTEGER";
-                break;
-            case "float":
-            case "double":
-                type = "REAL";
-                break;
-            case "java.util.date":
-            case "date":
-                type = "NUMERIC";
-                break;
-            default:
-                type = "TEXT";
-                break;
+        ColumnType columnType = TableColumn.getColumnTypeCode(tableColumn.Type.toLowerCase());
 
-        }
-
+        if(ColumnType.TextType == columnType)
+            type = "TEXT";
+        else if(ColumnType.IntegerType == columnType)
+            type = "INTEGER";
+        else if(ColumnType.DoubleType == columnType || ColumnType.FloatType == columnType)
+            type = "REAL";
+        else if(ColumnType.DateType == columnType)
+            type = "NUMERIC";
+        else
+            type = "TEXT";
 
         for(int i = 0; i < tableColumn.Constraints.length; i++)
         {
@@ -235,37 +224,21 @@ public class Helper {
         return  type;
     }
 
-    private static String getSqliteColumnValue(Query query, TableColumn tableColumn)
-    {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-            if(query == Query.Insert && Arrays.stream(tableColumn.Constraints).anyMatch(x -> x == Constraint.PrimaryKey)) {
-
-                return "NULL";
-
-            }
-        }
-        return  getSqliteColumnValue(tableColumn.Value);
-    }
-
     private static String getSqliteColumnValue(Object data)
     {
         String value = "";
 
-        if(data != null)
+        if(data != null) {
+
             value = data.toString();
+            ColumnType columnType = TableColumn.getColumnTypeCode(data.getClass().getName().toLowerCase());
 
-        switch (data.getClass().getName().toLowerCase()) {
-            case "java.lang.string":
-            case "string":
-            case "java.util.date":
-            case "date":
+            if(ColumnType.TextType == columnType || ColumnType.DateType == columnType)
                 value = "'" + value + "'";
-                break;
-            default:
-                break;
 
+        }
+        else {
+            value = "NULL";
         }
 
         return  value;
@@ -294,7 +267,6 @@ public class Helper {
             try {
 
                 Entity entity = (Entity) entityClass.newInstance();
-
                 Field[] fields = entityClass.getFields();
 
                 for (int i = 0; i < fields.length; i++) {
@@ -306,45 +278,34 @@ public class Helper {
 
                         if (hashMap.containsKey(fields[i].getName())){
 
-                            String typeCode = fields[i].getType().getName().toLowerCase();
+                            ColumnType columnType = TableColumn.getColumnTypeCode(fields[i].getType().getName().toLowerCase());
                             String value = hashMap.get(fields[i].getName());
 
-                            switch (typeCode) {
-                                case "double":
-                                    fields[i].set(entity, Double.valueOf(value));
-                                case "int":
-                                case "integer":
-                                case "java.lang.int":
-                                case "java.lang.integer":
-                                    fields[i].set(entity, Integer.valueOf(value));
-                                case "float":
-                                    fields[i].set(entity, Float.valueOf(value));
-                                case "java.lang.string":
-                                case "string":
-                                    fields[i].set(entity, value);
-                                case "java.util.date":
-                                case "date":
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                        fields[i].set(entity, LocalDateTime.parse(value));
-                                    }
-                                    break;
-                                default:
-                                    break;
-
+                            if(ColumnType.TextType == columnType)
+                                fields[i].set(entity, value);
+                            else if(ColumnType.DoubleType == columnType)
+                                fields[i].set(entity, Double.valueOf(value));
+                            else if(ColumnType.FloatType == columnType)
+                                fields[i].set(entity, Float.valueOf(value));
+                            else if(ColumnType.IntegerType == columnType)
+                                fields[i].set(entity, Integer.valueOf(value));
+                            else if(ColumnType.DateType == columnType) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    fields[i].set(entity, LocalDateTime.parse(value));
+                                }
                             }
-
 
                         }
 
                     } catch (Exception ex) {
-
+                        Helper.log("hashMapToEntity|error|0|" + ex.getMessage());
                     }
                 }
 
                 return entity;
 
-            } catch (Exception e) {
-
+            } catch (Exception ex) {
+                Helper.log("hashMapToEntity|error|1|" + ex.getMessage());
             }
         }
 

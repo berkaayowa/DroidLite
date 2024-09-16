@@ -56,6 +56,7 @@ public class Database extends SQLiteOpenHelper {
         }
         catch (Exception ex)
         {
+            Helper.log("Database|run|error|0|" + ex.getMessage());
         }
 
         return false;

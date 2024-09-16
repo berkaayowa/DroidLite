@@ -13,19 +13,14 @@ public class Entity implements IEntity {
     public Boolean save() {
 
         Table table = Helper.convertEntityClassToTable(this.getClass(), this);
-
         TableColumn primaryKeyColumn = table.getPrimaryKey();
-
         TableQuery query = null;
 
         //This is new record then generate insert query
-        if(primaryKeyColumn.Value == primaryKeyColumn.getDefaultValue()){
+        if(primaryKeyColumn.Value == primaryKeyColumn.getDefaultValue())
             query = Helper.generateInsertQuery(table);
-        }
-        else {
-            //new TableColumn[]{new TableColumn("Name", name)}
+        else
             query = Helper.generateUpdateQuery(table);
-        }
 
         return Database.getInstance().run(query.Statement);
     }
@@ -34,13 +29,11 @@ public class Entity implements IEntity {
     public ArrayList<IEntity> get(Class<?> target, TableColumn[] columns) {
 
         ArrayList<IEntity> records = new ArrayList<>();
-
         Table table = Helper.convertEntityClassToTable(target, null);
 
         if(table != null) {
 
             TableQuery query =  Helper.generateSelectQuery(table, columns);
-
             records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement, Helper.tableColumnToBindingParameter(columns)));
         }
 
@@ -56,14 +49,13 @@ public class Entity implements IEntity {
     public static ArrayList<IEntity> getAll(Class<?> target, TableColumn[] columns) {
 
         ArrayList<IEntity> records = new ArrayList<>();
-
         Table table = Helper.convertEntityClassToTable(target, null);
 
         if(table != null) {
 
             TableQuery query =  Helper.generateSelectQuery(table, columns);
-
             records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement, Helper.tableColumnToBindingParameter(columns)));
+
         }
 
         return records;

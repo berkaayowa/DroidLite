@@ -1,5 +1,7 @@
 package com.droidlite.sqlite;
 
+import com.droidlite.sqlite.enums.ColumnType;
+
 public class TableColumn {
     public String Name;
     public String Type;
@@ -34,5 +36,46 @@ public class TableColumn {
 
         }
 
+    }
+
+    public static ColumnType getColumnType(Object value, String typeCode) {
+
+        if(value == null && typeCode == null)
+            return ColumnType.Unknown;
+
+        if(value != null && typeCode == null)
+            typeCode = value.getClass().getName().toLowerCase();
+
+        switch (typeCode) {
+            case "float":
+                return ColumnType.FloatType;
+            case "double":
+                return ColumnType.DoubleType;
+            case "int":
+            case "java.lang.int":
+            case "java.lang.integer":
+            case "integer":
+                return ColumnType.IntegerType;
+            case "java.lang.string":
+            case "string":
+                return ColumnType.TextType;
+            case "java.util.date":
+            case "date":
+                return ColumnType.DateType;
+            default:
+                return ColumnType.Unknown;
+
+        }
+
+    }
+
+    public static ColumnType getColumnTypeByValue(Object value)
+    {
+        return getColumnType(value, null);
+    }
+
+    public static ColumnType getColumnTypeCode(String typCode)
+    {
+        return getColumnType(null, typCode);
     }
 }
