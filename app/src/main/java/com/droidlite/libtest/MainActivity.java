@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<IEntity> list = User.getAll();
 
-        if(list.size() > 0) {
+        if(!list.isEmpty()) {
+
             User testuser = (User) list.get(0);
 
             Helper.log("Data size:" + String.valueOf(list.size()));
