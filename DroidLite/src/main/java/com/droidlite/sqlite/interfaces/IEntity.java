@@ -12,5 +12,6 @@ public interface IEntity {
     
     public Boolean save();
     public ArrayList<IEntity> get(Class<?> target, TableColumn [] columns);
+    public Boolean delete();
 
 }

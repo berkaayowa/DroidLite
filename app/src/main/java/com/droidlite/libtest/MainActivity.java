@@ -24,19 +24,19 @@ public class MainActivity extends AppCompatActivity {
                 User.class
         });
 
-        User user = new User();
-        user.Id = 0;
-        user.Name = "ferre";
-        user.Dob = new Date();
-        user.Salary = 4;
-        user.HourWorked = 6;
-
-        if(user.save()) {
-            Helper.log("Saved");
-        }
-        else {
-            Helper.log("Could not be save");
-        }
+//        User user = new User();
+//        user.Id = 0;
+//        user.Name = "ferre";
+//        user.Dob = new Date();
+//        user.Salary = 4;
+//        user.HourWorked = 6;
+//
+//        if(user.save()) {
+//            Helper.log("Saved");
+//        }
+//        else {
+//            Helper.log("Could not be save");
+//        }
 
         ArrayList<IEntity> list = User.getAll();
 
@@ -52,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
             if(testuser.save())
                 Helper.log("Updated");
+
+            if(list.size() > 1) {
+
+                testuser = (User) list.get(1);
+
+                if(testuser.delete()) {
+                    Helper.log("Deleted");
+                }
+            }
         }
         else {
             Helper.log("Could not be save");

@@ -192,6 +192,29 @@ public class Helper {
         return new TableQuery(Query.Insert, insertQuery);
     }
 
+    public static TableQuery generateDeleteQuery(Table table, TableColumn[] whereCondition) {
+
+        String deleteQuery = "DELETE FROM " + table.Name + " WHERE {{whereCondition}}";
+        String deleteWhereCondition = " ";
+
+        if(whereCondition.length > 0) {
+
+            for (int i = 0; i < whereCondition.length; i++) {
+
+                deleteWhereCondition = deleteWhereCondition + whereCondition[i].Name + " = " + getSqliteColumnValue(whereCondition[i].Value);
+
+                if (i != whereCondition.length - 1)
+                    deleteWhereCondition = deleteWhereCondition + ", ";
+
+            }
+
+        }
+
+        deleteQuery = deleteQuery.replace("{{whereCondition}}", deleteWhereCondition);
+
+        return new TableQuery(Query.Delete, deleteQuery);
+    }
+
     private static String getSqliteColumnType(TableColumn tableColumn)
     {
         String type = "";

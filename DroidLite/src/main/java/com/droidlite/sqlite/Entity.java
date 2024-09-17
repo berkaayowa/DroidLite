@@ -27,18 +27,7 @@ public class Entity implements IEntity {
 
     @Override
     public ArrayList<IEntity> get(Class<?> target, TableColumn[] columns) {
-
-        ArrayList<IEntity> records = new ArrayList<>();
-        Table table = Helper.convertEntityClassToTable(target, null);
-
-        if(table != null) {
-
-            TableQuery query =  Helper.generateSelectQuery(table, columns);
-            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement, Helper.tableColumnToBindingParameter(columns)));
-        }
-
-        return records;
-
+        return getAll(target, columns);
     }
 
     public ArrayList<IEntity> get(TableColumn[] columns) {
@@ -75,6 +64,30 @@ public class Entity implements IEntity {
     public IEntity getFirstOrNull(TableColumn[] columns) {
 
         return getFirstOrNull(this.getClass(), columns);
+    }
+
+    @Override
+    public Boolean delete() {
+
+        Table table = Helper.convertEntityClassToTable(this.getClass(), this);
+        TableColumn primaryKeyColumn = table.getPrimaryKey();
+
+        return delete(this.getClass(), new TableColumn[]{primaryKeyColumn});
+    }
+
+    public static Boolean delete(Class<?> target, TableColumn[] columns) {
+
+        Table table = Helper.convertEntityClassToTable(target, null);
+
+        if(table != null) {
+
+            TableQuery query =  Helper.generateDeleteQuery(table, columns);
+            return Database.getInstance().run(query.Statement);
+
+        }
+
+        return false;
+
     }
 
     protected void populate(IEntity entity) {
