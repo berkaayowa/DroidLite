@@ -38,33 +38,36 @@ public class MainActivity extends AppCompatActivity {
 //            Helper.log("Could not be save");
 //        }
 
+//        ArrayList<IEntity> list = User.getAll();
+//
+//        if(!list.isEmpty()) {
+//
+//            User testuser = (User) list.get(0);
+//
+//            Helper.log("Data size:" + String.valueOf(list.size()));
+//            Helper.log("Has data:" + String.valueOf(testuser.Id));
+//
+//            testuser.Name = "omba";
+//            testuser.Dob = new Date();
+//
+//            if(testuser.save())
+//                Helper.log("Updated");
+//
+//            if(list.size() > 1) {
+//
+//                testuser = (User) list.get(1);
+//
+//                if(testuser.delete()) {
+//                    Helper.log("Deleted");
+//                }
+//            }
+//        }
+//        else {
+//            Helper.log("Could not be save");
+       // }
+
         ArrayList<IEntity> list = User.getAll();
+        User user = new User(1);
 
-        if(!list.isEmpty()) {
-
-            User testuser = (User) list.get(0);
-
-            Helper.log("Data size:" + String.valueOf(list.size()));
-            Helper.log("Has data:" + String.valueOf(testuser.Id));
-
-            testuser.Name = "omba";
-            testuser.Dob = new Date();
-
-            if(testuser.save())
-                Helper.log("Updated");
-
-            if(list.size() > 1) {
-
-                testuser = (User) list.get(1);
-
-                if(testuser.delete()) {
-                    Helper.log("Deleted");
-                }
-            }
-        }
-        else {
-            Helper.log("Could not be save");
-        }
-        //new User(1);
     }
 }

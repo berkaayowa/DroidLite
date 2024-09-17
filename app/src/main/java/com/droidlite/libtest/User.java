@@ -9,7 +9,6 @@ import com.droidlite.sqlite.interfaces.IEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Table(Name = "User")
 public class User extends Entity {
@@ -19,7 +18,7 @@ public class User extends Entity {
     }
 
     public User(int id) {
-        populate(getById(id));
+        bind(getById(id));
     }
 
     @Column(Name = "Id", Constraint = {Constraint.PrimaryKey})

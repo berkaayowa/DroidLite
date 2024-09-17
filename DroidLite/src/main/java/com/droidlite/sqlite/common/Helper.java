@@ -90,7 +90,8 @@ public class Helper {
 
             for (int i = 0; i < whereCondition.length; i++) {
 
-                selectWhereCondition = selectWhereCondition + whereCondition[i].Name + " = ? " ;
+                selectWhereCondition = selectWhereCondition + whereCondition[i].Name + " = " + getSqliteColumnValue(whereCondition[i].Value);
+                //selectWhereCondition = selectWhereCondition + whereCondition[i].Name + " = ? " ;
                 //+ getSqliteColumnValue(whereCondition[i].Value)
                 if (i != whereCondition.length - 1)
                     selectColumns = selectColumns + " AND ";

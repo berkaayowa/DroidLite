@@ -1,10 +1,11 @@
 package com.droidlite.sqlite;
 
+import com.droidlite.sqlite.attributes.Column;
 import com.droidlite.sqlite.common.Database;
 import com.droidlite.sqlite.common.Helper;
-import com.droidlite.sqlite.enums.Query;
 import com.droidlite.sqlite.interfaces.IEntity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Entity implements IEntity {
@@ -43,7 +44,8 @@ public class Entity implements IEntity {
         if(table != null) {
 
             TableQuery query =  Helper.generateSelectQuery(table, columns);
-            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement, Helper.tableColumnToBindingParameter(columns)));
+            //Helper.tableColumnToBindingParameter(columns)
+            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement));
 
         }
 
@@ -90,8 +92,27 @@ public class Entity implements IEntity {
 
     }
 
-    protected void populate(IEntity entity) {
-        //ToDo
+    protected void bind(IEntity entity) {
+
+        if(entity != null) {
+
+            Field[] fields = entity.getClass().getFields();
+
+            for (int i = 0; i < fields.length; i++) {
+
+                try {
+
+                    if (!fields[i].isAnnotationPresent(Column.class))
+                        continue;
+
+                    fields[i].set(this, fields[i].get(entity));
+                } catch (Exception ex) {
+                    Helper.log("Entity|populate|error|0|" + ex.getMessage());
+                }
+            }
+
+        }
+
     }
 
 

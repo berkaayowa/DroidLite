@@ -62,11 +62,15 @@ public class Database extends SQLiteOpenHelper {
         return false;
     }
 
+    public ArrayList<HashMap<String, String>> runSelectQuery(String sql){
+        return runSelectQuery(sql, new String[]{});
+    }
+
     public ArrayList<HashMap<String, String>> runSelectQuery(String sql, String[] bindingParameter){
 
         ArrayList<HashMap<String, String>> result = new ArrayList<>();
         //String sql = "SELECT * from Visiteur WHERE vis_login = ? and vis_mdp = ?";
-        SQLiteStatement statement =  this.getWritableDatabase().compileStatement(sql);
+        //SQLiteStatement statement =  this.getWritableDatabase().compileStatement(sql);
 
         Cursor cursor = this.getWritableDatabase().rawQuery(sql, bindingParameter);
 
