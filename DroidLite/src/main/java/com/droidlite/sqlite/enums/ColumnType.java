@@ -7,6 +7,7 @@ public enum ColumnType {
     DoubleType,
     FloatType,
     DateType,
-    TimeType
+    TimeType,
+    Boolean,
 
 }

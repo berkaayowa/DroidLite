@@ -1,11 +1,13 @@
 package com.droidlite.sqlite;
 
+import com.droidlite.sqlite.attributes.AlterColumn;
 import com.droidlite.sqlite.enums.ColumnType;
 
 public class TableColumn {
     public String Name;
     public String Type;
     public Object Value;
+    public AlterColumn Alter;
 
     public com.droidlite.sqlite.enums.Constraint [] Constraints;
 
@@ -31,6 +33,8 @@ public class TableColumn {
             case "java.lang.string":
             case "string":
                 return "";
+            case "boolean":
+                return false;
             default:
                 return null;
 
@@ -48,8 +52,10 @@ public class TableColumn {
 
         switch (typeCode) {
             case "float":
+            case "java.lang.float":
                 return ColumnType.FloatType;
             case "double":
+            case "java.lang.double":
                 return ColumnType.DoubleType;
             case "int":
             case "java.lang.int":
@@ -62,6 +68,9 @@ public class TableColumn {
             case "java.util.date":
             case "date":
                 return ColumnType.DateType;
+            case "boolean":
+            case "java.lang.boolean":
+                return ColumnType.Boolean;
             default:
                 return ColumnType.Unknown;
 
@@ -78,4 +87,5 @@ public class TableColumn {
     {
         return getColumnType(null, typCode);
     }
+
 }

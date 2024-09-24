@@ -3,6 +3,7 @@ package com.droidlite.sqlite;
 import com.droidlite.sqlite.attributes.Column;
 import com.droidlite.sqlite.common.Database;
 import com.droidlite.sqlite.common.Helper;
+import com.droidlite.sqlite.common.QueryHelper;
 import com.droidlite.sqlite.interfaces.IEntity;
 
 import java.lang.reflect.Field;
@@ -17,13 +18,18 @@ public class Entity implements IEntity {
         TableColumn primaryKeyColumn = table.getPrimaryKey();
         TableQuery query = null;
 
+        //BA: 24092023
         //This is new record then generate insert query
         if(primaryKeyColumn.Value == primaryKeyColumn.getDefaultValue())
-            query = Helper.generateInsertQuery(table);
+            query = QueryHelper.generateInsertQuery(table);
         else
-            query = Helper.generateUpdateQuery(table);
+            query = QueryHelper.generateUpdateQuery(table);
 
-        return Database.getInstance().run(query.Statement);
+        //BA: 24092023
+        //If there is alter query run them all before the main query
+        executeQueries(query.TableQueries);
+
+        return Database.getInstance().run(query.Query);
     }
 
     @Override
@@ -43,9 +49,13 @@ public class Entity implements IEntity {
 
         if(table != null) {
 
-            TableQuery query =  Helper.generateSelectQuery(table, columns);
-            //Helper.tableColumnToBindingParameter(columns)
-            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Statement));
+            TableQuery query =  QueryHelper.generateSelectQuery(table, columns);
+
+            //BA: 24092023
+            //If there is alter query run them all before the main query
+            executeQueries(query.TableQueries);
+
+            records = Helper.mapResultSet(target, Database.getInstance().runSelectQuery(query.Query));
 
         }
 
@@ -83,8 +93,8 @@ public class Entity implements IEntity {
 
         if(table != null) {
 
-            TableQuery query =  Helper.generateDeleteQuery(table, columns);
-            return Database.getInstance().run(query.Statement);
+            TableQuery query =  QueryHelper.generateDeleteQuery(table, columns);
+            return Database.getInstance().run(query.Query);
 
         }
 
@@ -113,6 +123,26 @@ public class Entity implements IEntity {
 
         }
 
+    }
+
+    private static void executeQueries(ArrayList<TableQuery> queries) {
+
+        for (TableQuery query: queries) {
+
+            try {
+
+                Helper.log("Entity.executeAlterQueries|query|" + query.Query);
+
+                if(Database.getInstance().run(query.Query))
+                    Helper.log("Entity.executeAlterQueries|succeed|");
+                else
+                    Helper.log("Entity.executeAlterQueries|failed|");
+
+            } catch (Exception ex) {
+                Helper.log("Entity.executeAlterQueries|error|0|" + ex.getMessage());
+            }
+
+        }
     }
 
 

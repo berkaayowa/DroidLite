@@ -5,5 +5,6 @@ public enum Query {
     Select,
     Update,
     Insert,
-    Delete
+    Delete,
+    Alter
 }

@@ -1,6 +1,7 @@
 package com.droidlite.libtest;
 
 import com.droidlite.sqlite.TableColumn;
+import com.droidlite.sqlite.attributes.AlterColumn;
 import com.droidlite.sqlite.attributes.Column;
 import com.droidlite.sqlite.enums.Constraint;
 import com.droidlite.sqlite.Entity;
@@ -22,7 +23,7 @@ public class User extends Entity {
     }
 
     @Column(Name = "Id", Constraint = {Constraint.PrimaryKey})
-    public Integer Id;
+    public int Id;
 
     @Column(Constraint = {Constraint.Null})
     public String Name;
@@ -35,6 +36,10 @@ public class User extends Entity {
 
     @Column
     public double HourWorked;
+
+    @AlterColumn(DataBaseVersion = 1)
+    @Column(Constraint = {Constraint.Null})
+    public boolean IsDeleted;
 
     public IEntity getById(int id) {
         return getFirstOrNull(new TableColumn[]{new TableColumn("Id", id)});

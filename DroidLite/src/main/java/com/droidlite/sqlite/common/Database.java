@@ -17,9 +17,11 @@ import java.util.HashMap;
 public class Database extends SQLiteOpenHelper {
 
     private static Database CurrentDbObject;
+    public int Version;
 
     private  Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+        this.Version = version;
     }
 
     public static Database getInstance() {

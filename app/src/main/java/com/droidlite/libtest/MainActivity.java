@@ -19,24 +19,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DroidLiteSetup.dataBase(this, "tets.db", 1);
-        DroidLiteSetup.tables(new Class[]{
-                User.class
-        });
+        DroidLiteSetup.dataBase(this, "tets.db", 1,
+                new Class[]{
+                        User.class
+                });
 
-//        User user = new User();
-//        user.Id = 0;
-//        user.Name = "ferre";
-//        user.Dob = new Date();
-//        user.Salary = 4;
-//        user.HourWorked = 6;
-//
-//        if(user.save()) {
-//            Helper.log("Saved");
-//        }
-//        else {
-//            Helper.log("Could not be save");
-//        }
+        User user = new User();
+        user.Id = 0;
+        user.Name = "ferre";
+        user.Dob = new Date();
+        user.Salary = 4;
+        user.HourWorked = 6;
+
+        if(user.save()) {
+            Helper.log("Saved");
+        }
+        else {
+            Helper.log("Could not be save");
+        }
 
 //        ArrayList<IEntity> list = User.getAll();
 //
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
        // }
 
         ArrayList<IEntity> list = User.getAll();
-        User user = new User(1);
+        User users = new User(1);
 
     }
 }
