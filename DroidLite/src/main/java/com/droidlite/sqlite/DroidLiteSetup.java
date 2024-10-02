@@ -8,12 +8,12 @@ import com.droidlite.sqlite.common.QueryHelper;
 
 public class DroidLiteSetup {
 
-    public static void dataBase(Context context, String name, int dataBaseVersion){
-        Database.setup(context, name, dataBaseVersion);
+    public static void dataBase(Context context, String name, boolean isDebugMode){
+        Database.setup(context, name, isDebugMode);
     }
 
-    public static void dataBase(Context context, String name, int dataBaseVersion, Class<?> [] entities){
-        Database.setup(context, name, dataBaseVersion);
+    public static void dataBase(Context context, String name, Class<?> [] entities, boolean isDebugMode){
+        Database.setup(context, name, isDebugMode);
         tables(entities);
 
     }

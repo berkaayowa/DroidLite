@@ -3,6 +3,7 @@ package com.droidlite.sqlite.common;
 import com.droidlite.sqlite.Table;
 import com.droidlite.sqlite.TableColumn;
 import com.droidlite.sqlite.TableQuery;
+import com.droidlite.sqlite.enums.AlterType;
 import com.droidlite.sqlite.enums.ColumnType;
 import com.droidlite.sqlite.enums.Constraint;
 import com.droidlite.sqlite.enums.Query;
@@ -22,17 +23,25 @@ public class QueryHelper {
 
         for(int i = 0; i < table.Columns.size(); i++) {
 
+            //BA: 24092023
+            //Checking if alter column indicator is present, if yes then generate alter query
+            TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
+
+            if(alterColumnQuery != null) {
+
+                alterColumnQueries.add(alterColumnQuery);
+
+                //BA: 24092023
+                //If there is an drop column sub query then don't include then field on selection
+                if(table.Columns.get(i).Alter.AlterType() == AlterType.Drop)
+                    continue;
+            }
+
             selectColumns = selectColumns + table.Columns.get(i).Name;
 
             if(i != table.Columns.size() - 1)
                 selectColumns = selectColumns + ", ";
 
-            //BA: 24092023
-            //Checking if alter column indicator is present, if yes then generate alter query
-            TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
-
-            if(alterColumnQuery != null)
-                alterColumnQueries.add(alterColumnQuery);
 
         }
 
@@ -72,6 +81,11 @@ public class QueryHelper {
 
         for(int i = 0; i < table.Columns.size(); i++) {
 
+            //BA: 24092023
+            //If there is an drop column sub query then don't include then field on selection
+            if(table.Columns.get(i).Alter != null && table.Columns.get(i).Alter.AlterType() == AlterType.Drop)
+                continue;
+
             createTableColumns = createTableColumns + " " + table.Columns.get(i).Name + " " + getSqliteColumnType(table.Columns.get(i));
 
             if(i != table.Columns.size() - 1)
@@ -103,19 +117,26 @@ public class QueryHelper {
             }
             else {
 
+                //BA: 24092023
+                //Checking if alter column indicator is present, if yes then generate alter query
+                TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
+
+                if(alterColumnQuery != null) {
+
+                    alterColumnQueries.add(alterColumnQuery);
+
+                    //BA: 24092023
+                    //If there is an drop column sub query then don't include then field on selection
+                    if(table.Columns.get(i).Alter.AlterType() == AlterType.Drop)
+                        continue;
+                }
+
                 updateQueryColumns = updateQueryColumns + table.Columns.get(i).Name + " = " + getSqliteColumnValue(table.Columns.get(i).Value);
 
                 if(i != table.Columns.size() - 1)
                     updateQueryColumns = updateQueryColumns + ", ";
 
             }
-
-            //BA: 24092023
-            //Checking if alter column indicator is present, if yes then generate alter query
-            TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
-
-            if(alterColumnQuery != null)
-                alterColumnQueries.add(alterColumnQuery);
 
         }
 
@@ -140,25 +161,35 @@ public class QueryHelper {
 
         for(int i = 0; i < table.Columns.size(); i++) {
 
+            //BA: 24092023
+            //Checking if alter column indicator is present, if yes then generate alter query
+            TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
+
+            if(alterColumnQuery != null) {
+
+                alterColumnQueries.add(alterColumnQuery);
+
+                //BA: 24092023
+                //If there is an drop column sub query then don't include the field on selection
+                if(table.Columns.get(i).Alter.AlterType() == AlterType.Drop)
+                    continue;
+            }
+
             columns = columns + table.Columns.get(i).Name;
 
             if(primaryKey.Name == table.Columns.get(i).Name) {
                 columnsValue = columnsValue + " NULL ";
             }
-            else
+            else {
+
                 columnsValue = columnsValue + getSqliteColumnValue(table.Columns.get(i).Value);
+
+            }
 
             if(i != table.Columns.size() - 1) {
                 columns = columns + ", ";
                 columnsValue = columnsValue + ", ";
             }
-
-            //BA: 24092023
-            //Checking if alter column indicator is present, if yes then generate alter query
-            TableQuery alterColumnQuery = getAlterQueryIfPresent(table, table.Columns.get(i));
-
-            if(alterColumnQuery != null)
-                alterColumnQueries.add(alterColumnQuery);
 
         }
 
@@ -305,7 +336,16 @@ public class QueryHelper {
 
                 if (dataBaseVersionMatches) {
 
-                    String alterQuery = " ALTER TABLE " + table.Name + " ADD " + tableColumn.Name + " " + getSqliteColumnType(tableColumn);
+                    String alterQuery = "";
+
+                    if(tableColumn.Alter.AlterType() == AlterType.Add)
+                        alterQuery = " ALTER TABLE " + table.Name + " ADD " + tableColumn.Name + " " + getSqliteColumnType(tableColumn);
+                    else if(tableColumn.Alter.AlterType() == AlterType.Modify)
+                        alterQuery = " ALTER TABLE " + table.Name + " MODIFY COLUMN " + tableColumn.Name + " " + getSqliteColumnType(tableColumn);
+                    else if(tableColumn.Alter.AlterType() == AlterType.Drop)
+                        alterQuery = " ALTER TABLE " + table.Name + " DROP " + tableColumn.Name;
+                    else
+                        return null;
 
                     return new TableQuery(Query.Alter, alterQuery);
                 }

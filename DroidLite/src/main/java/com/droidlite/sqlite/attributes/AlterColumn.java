@@ -1,6 +1,8 @@
 package com.droidlite.sqlite.attributes;
 
 
+import com.droidlite.sqlite.enums.AlterType;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -9,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 
 public @interface AlterColumn {
     public int DataBaseVersion() default 0;
-//    public Constraint[] Constraint() default {};
+    public AlterType AlterType() default AlterType.Add;
 }

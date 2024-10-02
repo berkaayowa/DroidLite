@@ -3,6 +3,7 @@ package com.droidlite.libtest;
 import com.droidlite.sqlite.TableColumn;
 import com.droidlite.sqlite.attributes.AlterColumn;
 import com.droidlite.sqlite.attributes.Column;
+import com.droidlite.sqlite.enums.AlterType;
 import com.droidlite.sqlite.enums.Constraint;
 import com.droidlite.sqlite.Entity;
 import com.droidlite.sqlite.attributes.Table;
@@ -11,7 +12,7 @@ import com.droidlite.sqlite.interfaces.IEntity;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Table(Name = "User")
+@Table(Name = "tUser")
 public class User extends Entity {
 
     public User() {
@@ -28,16 +29,14 @@ public class User extends Entity {
     @Column(Constraint = {Constraint.Null})
     public String Name;
 
-    @Column(Constraint = {Constraint.NotNull})
-    public Date Dob;
-
     @Column
     public float Salary;
 
+    @AlterColumn(AlterType = AlterType.Drop)
     @Column
     public double HourWorked;
 
-    @AlterColumn(DataBaseVersion = 1)
+    @AlterColumn(AlterType = AlterType.Drop)
     @Column(Constraint = {Constraint.Null})
     public boolean IsDeleted;
 

@@ -18,6 +18,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static Database CurrentDbObject;
     public int Version;
+    public boolean IsDebugMode;
 
     private  Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -29,10 +30,12 @@ public class Database extends SQLiteOpenHelper {
         return CurrentDbObject;
     }
 
-    public static Database setup(@Nullable Context context, @Nullable String name, int version) {
+    public static Database setup(@Nullable Context context, @Nullable String name, boolean isDebugMode) {
 
         if(CurrentDbObject == null)
-            CurrentDbObject = new Database(context, name, null, version);
+            CurrentDbObject = new Database(context, name, null, 1);
+
+        CurrentDbObject.IsDebugMode = isDebugMode;
 
         return CurrentDbObject;
     }
@@ -53,6 +56,9 @@ public class Database extends SQLiteOpenHelper {
     public boolean run(String query) {
 
         try {
+
+            Helper.log("Database|run|query|" + query);
+
             this.getWritableDatabase().execSQL(query);
             return true;
         }
@@ -73,6 +79,8 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<HashMap<String, String>> result = new ArrayList<>();
         //String sql = "SELECT * from Visiteur WHERE vis_login = ? and vis_mdp = ?";
         //SQLiteStatement statement =  this.getWritableDatabase().compileStatement(sql);
+
+        Helper.log("Database|runSelectQuery|query|" + sql);
 
         Cursor cursor = this.getWritableDatabase().rawQuery(sql, bindingParameter);
 

@@ -146,6 +146,9 @@ public class Helper {
     }
 
     public static void log(String message) {
-        Log.e("DroidLite~Log",message);
+
+        if(Database.getInstance().IsDebugMode)
+            Log.e("DroidLite~Log",message);
+
     }
 }

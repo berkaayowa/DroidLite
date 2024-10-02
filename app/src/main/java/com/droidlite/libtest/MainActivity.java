@@ -19,15 +19,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DroidLiteSetup.dataBase(this, "tets.db", 1,
+        DroidLiteSetup.dataBase(this, "tets.db",
                 new Class[]{
                         User.class
-                });
+                }, true);
 
         User user = new User();
         user.Id = 0;
         user.Name = "ferre";
-        user.Dob = new Date();
+        //user.Dob = new Date();
         user.Salary = 4;
         user.HourWorked = 6;
 
