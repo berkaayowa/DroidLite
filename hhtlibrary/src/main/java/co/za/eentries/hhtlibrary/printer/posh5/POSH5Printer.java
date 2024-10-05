@@ -1,57 +1,73 @@
-package co.za.eentries.hhtlibrary.printer;
+package co.za.eentries.hhtlibrary.printer.posh5;
 
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.os.IBinder;
-import android.os.RemoteException;
 
-import com.sr.SrPrinter;
+import net.nyx.printerservice.print.IPrinterService;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import co.za.eentries.hhtlibrary.printer.IPrinter;
 import co.za.eentries.hhtlibrary.utility.Common;
-import co.za.eentries.hhtlibrary.utility.Device;
 import recieptservice.com.recieptservice.PrinterInterface;
 
-class POSH5Printer implements IPrinter {
+public class POSH5Printer implements IPrinter {
 
     protected PrinterInterface printerInterface;
     protected Context context;
     protected boolean isServiceConnected;
+    protected ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+    protected Handler handler= new Handler();
 
     public POSH5Printer(Context sourceContext){
 
         context = sourceContext;
-
         Common.log("POSH5Printer|Connecting... ");
-//        Common.log("Model: " + Device.getModel());
-//        Common.log("Manufacture: " + Device.getManufacture());
+        bindService();
 
-        SrPrinter.bindPrinter(context, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+    }
 
-                isServiceConnected = true;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
 
-                Common.log("POSH5Printer: Connected");
+            Common.log("POSH5Printer: Disconnected");
+            isServiceConnected = false;
+            printerInterface = null;
+            handler.postDelayed(() -> bindService(), 5000);
 
-                printerInterface = PrinterInterface.Stub.asInterface(iBinder);
+        }
 
-                printText("Testing");
-                printBarCode("12345678");
-                printQRCode("12345678");
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
 
-            }
 
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
+            Common.log("POSH5Printer: Connected");
+            printerInterface = PrinterInterface.Stub.asInterface(service);
+            isServiceConnected = true;
 
-                isServiceConnected = false;
-                Common.log("POSH5Printer: Disconnected");
-            }
-        });
+//            printText("Testing");
+//            printBarCode("12345678", 162, 2);
+//            printQRCode("12345678", 3, 0);
 
+        }
+    };
+
+    public  void bindService() {
+        Intent intent = new Intent();
+        intent.setClassName("recieptservice.com.recieptservice", "recieptservice.com.recieptservice.service.PrinterService");
+        context.startService(intent);
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void unbindService() {
+        context.unbindService(serviceConnection);
     }
 
     @Override
@@ -62,8 +78,10 @@ class POSH5Printer implements IPrinter {
             try {
                 if(text == null || text.isEmpty())
                     Common.log("POSH5Printer.printTex|error[0]: text is null or empty");
-                else
+                else {
                     printerInterface.printText(text);
+                    printNewline(1);
+                }
 
             } catch (Exception ex) {
                 Common.log("POSH5Printer.printTex|error[1]:" + ex.getMessage());
@@ -93,7 +111,7 @@ class POSH5Printer implements IPrinter {
     }
 
     @Override
-    public void printBarCode(String data) {
+    public void printBarCode(String data, int height, int width) {
 
         if(printerInterface != null) {
 
@@ -101,7 +119,7 @@ class POSH5Printer implements IPrinter {
                 if(data == null || data.isEmpty())
                     Common.log("POSH5Printer.printBarCode|error[0]: data is null or empty");
                 else
-                    printerInterface.print128BarCode(data, 3, 80, 2);
+                    printerInterface.print128BarCode(data, 3, height, width);
 
             } catch (Exception ex) {
                 Common.log("POSH5Printer.printBarCode|error[1]:" + ex.getMessage());
@@ -114,7 +132,7 @@ class POSH5Printer implements IPrinter {
     }
 
     @Override
-    public void printQRCode(String data) {
+    public void printQRCode(String data, int height, int width) {
 
         if(printerInterface != null) {
 
@@ -131,6 +149,25 @@ class POSH5Printer implements IPrinter {
         }
         else
             Common.log("POSH5Printer.printQRCode|error[2]:service is not ready yet");
+
+    }
+
+    @Override
+    public void printNewline(int numberOfLines) {
+
+        if(printerInterface != null) {
+
+            try {
+
+                printerInterface.nextLine(numberOfLines);
+
+            } catch (Exception ex) {
+                Common.log("POSH5Printer.printNewline|error[1]:" + ex.getMessage());
+            }
+
+        }
+        else
+            Common.log("POSH5Printer.printNewline|error[2]:service is not ready yet");
 
     }
 

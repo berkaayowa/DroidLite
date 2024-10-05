@@ -2,7 +2,9 @@ package com.droidlite.libtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.droidlite.sqlite.DroidLiteSetup;
 import com.droidlite.sqlite.common.Helper;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 
 import co.za.eentries.hhtlibrary.printer.IPrinter;
 import co.za.eentries.hhtlibrary.printer.Printer;
+import co.za.eentries.hhtlibrary.scanner.CameraScanner;
+import co.za.eentries.hhtlibrary.scanner.ScannerRequest;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,15 +30,27 @@ public class MainActivity extends AppCompatActivity {
                         User.class
                 }, true);
 
-        testHHTLib();
-
-        IPrinter myPrinter = Printer.instance(this);
+        Printer.instance(this);
 
        // myPrinter.printBarCode("berka testing");
 
     }
 
     private void testHHTLib() {
+
+    }
+
+    public void qrCodeScan(View view) {
+
+        Intent intent = new Intent(this, CameraScanner.class);                                         // Added by Chris
+        startActivityForResult(intent, ScannerRequest.BarCode);
+
+    }
+
+    public void printText(View view){
+
+        IPrinter myPrinter = Printer.instance(this);
+        myPrinter.printText("printing something");
 
     }
 

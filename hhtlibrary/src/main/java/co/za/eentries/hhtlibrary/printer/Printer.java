@@ -1,6 +1,8 @@
 package co.za.eentries.hhtlibrary.printer;
 import android.content.Context;
 
+import co.za.eentries.hhtlibrary.printer.nyx.NYXPrinter;
+import co.za.eentries.hhtlibrary.printer.posh5.POSH5Printer;
 import co.za.eentries.hhtlibrary.utility.Common;
 import co.za.eentries.hhtlibrary.utility.Device;
 import co.za.eentries.hhtlibrary.utility.DeviceModelType;
@@ -20,6 +22,8 @@ public class Printer {
 
             if (Device.getModelType() == DeviceModelType.AlpsPOSH5)
                 printerSingletonInstance = new POSH5Printer(context);
+            if (Device.getModelType() == DeviceModelType.NyxNB55)
+                printerSingletonInstance = new NYXPrinter(context);
         }
 
         return  printerSingletonInstance;

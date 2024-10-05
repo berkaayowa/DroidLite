@@ -41,6 +41,8 @@ public class Device {
 
         if(model.equalsIgnoreCase("POSH5-OS01"))
             return DeviceModelType.AlpsPOSH5;
+        if(model.equalsIgnoreCase("NB55"))
+            return DeviceModelType.NyxNB55;
 
         return DeviceModelType.Unknown;
 
