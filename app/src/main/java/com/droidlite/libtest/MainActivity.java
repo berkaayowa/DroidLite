@@ -3,14 +3,16 @@ package com.droidlite.libtest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.droidlite.sqlite.DroidLiteSetup;
 import com.droidlite.sqlite.common.Helper;
 import com.droidlite.sqlite.interfaces.IEntity;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+import co.za.eentries.hhtlibrary.printer.IPrinter;
+import co.za.eentries.hhtlibrary.printer.Printer;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,20 @@ public class MainActivity extends AppCompatActivity {
                 new Class[]{
                         User.class
                 }, true);
+
+        testHHTLib();
+
+        IPrinter myPrinter = Printer.instance(this);
+
+       // myPrinter.printBarCode("berka testing");
+
+    }
+
+    private void testHHTLib() {
+
+    }
+
+    private void testDroidLite() {
 
         User user = new User();
         user.Id = 0;
@@ -48,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 //            Helper.log("Has data:" + String.valueOf(testuser.Id));
 //
 //            testuser.Name = "omba";
-//            testuser.Dob = new Date();
 //
 //            if(testuser.save())
 //                Helper.log("Updated");
@@ -64,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //        else {
 //            Helper.log("Could not be save");
-       // }
+//         }
 
         ArrayList<IEntity> list = User.getAll();
         User users = new User(1);

@@ -1,3 +1,4 @@
 rootProject.name = "LibTest"
 include ':app'
 include ':DroidLite'
+include ':hhtlibrary'
