@@ -1,4 +1,4 @@
-# DroidLite ORM [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](CHANGELOG.md)
+# DroidLite ORM [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](CHANGELOG.md)[![](https://jitpack.io/v/berkaayowa/DroidLite.svg)](https://jitpack.io/#berkaayowa/DroidLite)
 
 A lightweight Android ORM (Object Relational Mapping) library for SQLite database operations with minimal boilerplate code.
 
@@ -20,6 +20,28 @@ A lightweight Android ORM (Object Relational Mapping) library for SQLite databas
 
 ## 🚀 Installation
 
+## 📦 Integration with JitPack
+
+To include DroidLite in your Android project via JitPack:
+
+### Step 1: Add the JitPack repository
+Add this to your **settings.gradle** file:
+```gradle
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+### Step 2: Add the dependency
+Add this to your app/build.gradle file:
+```gradle
+dependencies {
+    implementation 'com.github.berkaayowa:DroidLite:Tag'
+}
+```
 ### 1. Initialize in Application Class
 Add this to your `Application` class:
 ```java
