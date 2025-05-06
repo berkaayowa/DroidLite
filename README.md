@@ -19,9 +19,6 @@ A lightweight Android ORM (Object Relational Mapping) library for SQLite databas
 ---
 
 ## 🚀 Installation
-
-## 📦 Integration with JitPack
-
 To include DroidLite in your Android project via JitPack:
 
 ### Step 1: Add the JitPack repository
