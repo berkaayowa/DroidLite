@@ -2,12 +2,14 @@ package com.droidlite.sqlite;
 
 import com.droidlite.sqlite.attributes.AlterColumn;
 import com.droidlite.sqlite.enums.ColumnType;
+import com.droidlite.sqlite.enums.ComparisonOperator;
 
 public class TableColumn {
     public String Name;
     public String Type;
     public Object Value;
     public AlterColumn Alter;
+    public ComparisonOperator Operator;
 
     public com.droidlite.sqlite.enums.Constraint [] Constraints;
 
@@ -17,6 +19,13 @@ public class TableColumn {
     public TableColumn(String name, Object value) {
         Value = value;
         Name = name;
+        Operator = ComparisonOperator.Default;
+    }
+
+    public TableColumn(String name, ComparisonOperator operator, Object value) {
+        Value = value;
+        Name = name;
+        Operator = operator;
     }
 
     public Object getDefaultValue() {

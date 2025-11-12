@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 //@Target(ElementType.FIELD)
 
-public @interface AlterColumn {
+public @interface  AlterColumn {
     public int DataBaseVersion() default 0;
     public AlterType AlterType() default AlterType.Add;
 }

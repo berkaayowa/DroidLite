@@ -32,11 +32,9 @@ public class User extends Entity {
     @Column
     public float Salary;
 
-    @AlterColumn(AlterType = AlterType.Drop)
     @Column
     public double HourWorked;
 
-    @AlterColumn(AlterType = AlterType.Drop)
     @Column(Constraint = {Constraint.Null})
     public boolean IsDeleted;
 
@@ -51,7 +49,6 @@ public class User extends Entity {
     public static ArrayList<IEntity> getAll() {
         return Entity.getAll(User.class, new TableColumn[]{});
     }
-
 
 
 }

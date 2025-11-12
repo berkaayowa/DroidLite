@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="000a143b-0af5-4652-9b1d-6c365b55ae72" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../app/libs/ntag424-1.0-20240406.124718-1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/com/droidlite/libtest/Ntag213Helper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/crypto/AesUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/NfcUniversal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/DesfireHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/MifareClassicHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/MifareUltralightHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/NdefHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/NfcUniversal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/nfc/NtagHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/utility/Str.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/other.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/droidlite/sqlite/TableColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/droidlite/sqlite/TableColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/droidlite/sqlite/attributes/AlterColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/droidlite/sqlite/attributes/AlterColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/com/droidlite/libtest/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/com/droidlite/libtest/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/com/droidlite/libtest/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/com/droidlite/libtest/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/androidTest/java/co/za/eentries/hhtlibrary/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/androidTest/java/co/za/onebyte/hhtlibrary/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/printer/IPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/printer/IPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/printer/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/printer/Printer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/printer/nyx/NYXPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/printer/nyx/NYXPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/printer/posh5/POSH5Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/printer/posh5/POSH5Printer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/scanner/CameraScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/CameraScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/scanner/ScannerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/scanner/ScannerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/utility/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/utility/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/utility/Device.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/utility/Device.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/eentries/hhtlibrary/utility/DeviceModelType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/main/java/co/za/onebyte/hhtlibrary/utility/DeviceModelType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hhtlibrary/src/test/java/co/za/eentries/hhtlibrary/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hhtlibrary/src/test/java/co/za/onebyte/hhtlibrary/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../settings.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="35NELIqJNTMwV7yQIhDaDffChoF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "android.gradle.sync.needed": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="000a143b-0af5-4652-9b1d-6c365b55ae72" name="Changes" comment="" />
+      <created>1762942071451</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762942071451</updated>
+    </task>
+    <servers />
+  </component>
+</project>
