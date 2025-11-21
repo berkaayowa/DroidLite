@@ -6,6 +6,7 @@ import android.nfc.tech.MifareUltralight;
 import android.util.Log;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import co.za.onebyte.hhtlibrary.utility.Str;
@@ -380,6 +381,55 @@ public class NTAG213 {
         return sb.toString();
     }
 
+    public boolean writeStringData(Tag tag, int startPage, String text, boolean protect) {
+        if (tag == null || text == null) {
+            Log.e(TAG, "Tag or text is null");
+            return false;
+        }
+
+        try {
+            byte[] fullData = text.getBytes(StandardCharsets.UTF_8);
+
+            int page = startPage;
+            int index = 0;
+
+            while (index < fullData.length) {
+
+                // Prepare 4-byte chunk
+                byte[] chunk = new byte[4];
+                int remaining = fullData.length - index;
+
+                if (remaining >= 4) {
+                    System.arraycopy(fullData, index, chunk, 0, 4);
+                } else {
+                    // Copy remaining bytes and pad the rest with 0x00
+                    System.arraycopy(fullData, index, chunk, 0, remaining);
+                    for (int i = remaining; i < 4; i++) {
+                        chunk[i] = 0x00;
+                    }
+                }
+
+                Log.d(TAG, "Writing chunk to page " + page + ": " + bytesToHex(chunk));
+
+                // Write using existing smartWrite()
+                if (!smartWrite(tag, page, chunk, protect)) {
+                    Log.e(TAG, "Failed writing to page " + page);
+                    return false;
+                }
+
+                index += 4;
+                page++;
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            Log.e(TAG, "writeStringData error", e);
+            return false;
+        }
+    }
+
+
     /**
      * Smart write: Writes 4 bytes to a page.
      * Automatically handles authentication and protection/unprotection logic.
@@ -658,6 +708,84 @@ public class NTAG213 {
             try { ul.close(); } catch (IOException ignore) {}
         }
     }
+
+    public boolean updatePasswordWithoutProtection(Tag tag, String newPwdHex, String newPackHex) {
+        MifareUltralight ul = MifareUltralight.get(tag);
+        if (ul == null) {
+            Log.e(TAG, "MifareUltralight not supported.");
+            return false;
+        }
+
+        try {
+            ul.connect();
+            Thread.sleep(10);
+
+            // Step 1: Temporarily enable password system (protect only password pages)
+            Log.i(TAG, "Temporarily enabling password protection (AUTH0 = 44)...");
+            if (!setAuth0(ul, (byte) 44)) {
+                Log.e(TAG, "Failed to set AUTH0 to 44.");
+                return false;
+            }
+
+            Thread.sleep(20);
+
+            // Step 2: Authenticate with current password (default = FF FF FF FF)
+            if (!authenticate(ul)) {
+                Log.e(TAG, "Authentication failed — cannot change password.");
+                return false;
+            }
+            Log.i(TAG, "Authentication OK.");
+
+            // Step 3: Write NEW PASSWORD (must be 4 bytes)
+            byte[] newPwd = hexStringToByteArray(newPwdHex);
+            if (newPwd.length != 4) {
+                Log.e(TAG, "Invalid password length");
+                return false;
+            }
+
+            byte[] writePwd = new byte[6];
+            writePwd[0] = (byte) 0xA2;
+            writePwd[1] = (byte) 44;
+            System.arraycopy(newPwd, 0, writePwd, 2, 4);
+            ul.transceive(writePwd);
+            Log.i(TAG, "Password written successfully.");
+
+            // Step 4: Write PACK (2 bytes)
+            if (newPackHex != null && newPackHex.length() == 4) {
+                byte[] newPack = hexStringToByteArray(newPackHex);
+
+                byte[] writePack = new byte[6];
+                writePack[0] = (byte) 0xA2;
+                writePack[1] = (byte) 45;
+                writePack[2] = newPack[0];
+                writePack[3] = newPack[1];
+                writePack[4] = 0x00;
+                writePack[5] = 0x00;
+                ul.transceive(writePack);
+
+                Log.i(TAG, "PACK written successfully.");
+            }
+
+            // Step 5: Restore AUTH0 back to factory default (FF)
+            Log.i(TAG, "Restoring AUTH0 to FF (protection disabled)...");
+            if (!setAuth0(ul, (byte) 0xFF)) {
+                Log.e(TAG, "Warning: Could not restore AUTH0 to FF!");
+                // Not a failure, password is changed successfully
+            }
+
+            this.password = newPwd;
+
+            Log.i(TAG, "Password updated successfully and protection restored to factory state.");
+            return true;
+
+        } catch (Exception e) {
+            Log.e(TAG, "updatePasswordWithoutProtection error", e);
+            return false;
+        } finally {
+            try { ul.close(); } catch (IOException ignore) {}
+        }
+    }
+
 
 
 

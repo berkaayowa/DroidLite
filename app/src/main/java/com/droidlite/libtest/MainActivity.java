@@ -1,5 +1,6 @@
 package com.droidlite.libtest;
 
+import static co.za.onebyte.hhtlibrary.utility.Str.byteArrayToHexString;
 import static co.za.onebyte.hhtlibrary.utility.Str.hexStringToByteArray;
 import static co.za.onebyte.hhtlibrary.utility.Str.stringToByteArray;
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example: Try reading Classic block
         byte[] key = hexStringToByteArray("A7F2D39C8B1E45A0C3D8F79E6A24BC17");
-        Common.log("key: " + Str.byteArrayToHexString(key));
+        Common.log("key: " + byteArrayToHexString(key));
 
         //byte[] block = helper.readMifareClassicBlock(1, 4, key, true);
         //byte[] block = helper.readMifareUltralightPage(4);
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] pageData = nfc.readNtagPage(4, password);
 
                 if (pageData != null) {
-                    Common.log("Page 4 data: " + Str.byteArrayToHexString(pageData));
+                    Common.log("Page 4 data: " + byteArrayToHexString(pageData));
                 }
 
                 // Write with password
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 // Read with AES encryption
                 byte[] pageData = nfc.readNtagPage(4, aesKey);
                 if (pageData != null) {
-                    Common.log("Page 4 data: " + Str.byteArrayToHexString(pageData));
+                    Common.log("Page 4 data: " + byteArrayToHexString(pageData));
                 }
 
                 // Write with AES encryption
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] pageData = nfc.readNtagPage(4, aesKey);
 
                 if (pageData != null) {
-                    Common.log("Page 4 data: " + Str.byteArrayToHexString(pageData));
+                    Common.log("Page 4 data: " + byteArrayToHexString(pageData));
                 }
 
                 break;
@@ -276,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] blockDatax = nfc.readMifareUltralightPage(0, key, true);
 
                 if (blockDatax != null) {
-                    Common.log("Data: " + Str.byteArrayToHexString(blockDatax));
+                    Common.log("Data: " + byteArrayToHexString(blockDatax));
                 }
 
                 break;
@@ -308,8 +309,9 @@ public class MainActivity extends AppCompatActivity {
         //Common.log("Response|" + readFromNtag424(lastTag, 4, 16));
 
 
-        readAndWriteNtag213(lastTag);
-
+//        readAndWriteNtag213(lastTag);
+        //writeProtectBlockNtag213(lastTag);
+        readNtag213(lastTag);
     }
 
 
@@ -317,7 +319,8 @@ public class MainActivity extends AppCompatActivity {
 
         int startPage = 5;
         NTAG213 ntag213 = new NTAG213("FFFFFFFF");
-        //Ntag213 ntag213 = new Ntag213("3F9A7C1D");
+        //ntag213.changePassword()
+        //ntag213 = new NTAG213("3F9A7C1D");
        // ntag213.readConfig(tag);
         byte[] newData = {(byte)'P', (byte)'2', (byte)'4', (byte)' '};
 
@@ -337,6 +340,61 @@ public class MainActivity extends AppCompatActivity {
 //        else {
 //            Common.log("Could not write");
 //        }
+
+    }
+
+    private void writeProtectBlockNtag213(Tag tag) {
+
+        int startPage = 5;
+        NTAG213 ntag213 = new NTAG213("FFFFFFFF");
+
+//        if(ntag213.updatePasswordWithoutProtection(tag, "3F9A7C1D", "")) {
+//            Common.log("Tag.Password|Changed");
+////            ntag213 = new NTAG213("3F9A7C1D");
+//        }
+//        else
+//            Common.log("Tag.Password|NotChanged");
+
+        // ntag213.readConfig(tag);
+        byte[] newData = {(byte)'P', (byte)'2', (byte)'4', (byte)' '};
+
+        if(ntag213.smartWrite(tag, startPage, newData, false)) {
+            Common.log("Tag.write:" + byteArrayToHexString(newData));
+        }
+        else
+            Common.log("Tag.write.Error:" + byteArrayToHexString(newData));
+
+        String asciiData = "123456789ABC";
+
+        if(ntag213.writeStringData(tag, startPage + 1, asciiData, true)) {
+            Common.log("Tag.write:" + asciiData);
+        }
+        else
+            Common.log("Tag.write.Error:" + byteArrayToHexString(newData));
+
+//        boolean[] xx = ntag213.getWritablePages(tag);
+//
+//        ntag213.dumpWritablePages(xx);
+        Common.log("Tag.Read indicator: "  + ntag213.readWithoutPassword(tag, startPage));
+        Common.log("Tag.Read 6 - 9: "  + ntag213.read(tag, 6));
+
+        //ntag.write(tag, 6, new byte[]{0x11, 0x22, 0x33, 0x44});
+//        if(ntag213.writeBytesSafe(tag, startPage, new byte[]{0x11, 0x22, 0x33, 0x44})) {
+//            Common.log("ReadUpdated");
+//        }
+//        else {
+//            Common.log("Could not write");
+//        }
+
+    }
+
+    private void readNtag213(Tag tag) {
+
+        int startPage = 5;
+        NTAG213 ntag213 = new NTAG213("3F9A7C1D");
+
+        Common.log("Tag.Read indicator: "  + byteArrayToHexString(ntag213.readWithoutPassword(tag, startPage)));
+        Common.log("Tag.Read 6 - 9: "  + ntag213.read(tag, 6));
 
     }
 
